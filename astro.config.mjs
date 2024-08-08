@@ -3,6 +3,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://blog.loli.wang', 
+  site: 'https://tools.loli.wang', 
+  outDir: "docs",
   integrations: [tailwind()]
 });
