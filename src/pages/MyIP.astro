@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+---
+
+<Layout
+  title={`查询本机IP | ${SITE_TITLE}`}
+  description={`查询本机IP | ${SITE_DESCRIPTION}`}
+>
+  <div
+    class="bg-gray-100 min-h-screen flex items-center justify-center pt-32 pb-32"
+  >
+    <div class="bg-white p-8 shadow-md w-full max-w-sm card">
+      <h1 class="text-2xl font-bold mb-4">查询本机IP</h1>
+    
+      <div class="mt-4">
+        <div id="ip-result" class="text-center text-lg font-semibold"></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+    getIPAddress();
+ function getIPAddress() {
+    const resultElement = document.getElementById("ip-result");
+    resultElement.innerText = "正在查询...";
+    
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        resultElement.innerText = `您的IP地址是: ${data.ip}`;
+      })
+      .catch(error => {
+        resultElement.innerText = "查询失败，请稍后再试。";
+        console.error("Error fetching IP address:", error);
+      });
+  }
+</script>
