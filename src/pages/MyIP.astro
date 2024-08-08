@@ -15,6 +15,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     
       <div class="mt-4">
         <div id="ip-result" class="text-center text-lg font-semibold"></div>
+      <div id="ip-details" class="text-center text-sm mt-4"></div>
       </div>
     </div>
   </div>
@@ -22,14 +23,24 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
 <script is:inline>
     getIPAddress();
- function getIPAddress() {
+  function getIPAddress() {
     const resultElement = document.getElementById("ip-result");
+    const detailsElement = document.getElementById("ip-details");
     resultElement.innerText = "正在查询...";
-    
-    fetch('https://api.ipify.org?format=json')
+    detailsElement.innerText = "";
+
+    fetch('https://ipinfo.io/json?token=d5f96380d5e00b')
       .then(response => response.json())
       .then(data => {
-        resultElement.innerText = `您的IP地址是: ${data.ip}`;
+        const { ip, city, region, country, org, loc } = data;
+        resultElement.innerText = `您的IP地址是: ${ip}`;
+        detailsElement.innerHTML = `
+          <p>城市: ${city}</p>
+          <p>地区: ${region}</p>
+          <p>国家: ${country}</p>
+          <p>组织: ${org}</p>
+          <p>经纬度: ${loc}</p>
+        `;
       })
       .catch(error => {
         resultElement.innerText = "查询失败，请稍后再试。";
