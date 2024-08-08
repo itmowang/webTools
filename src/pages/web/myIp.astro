@@ -1,6 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 ---
 
 <Layout
@@ -32,6 +32,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     fetch('https://ipinfo.io/json?token=d5f96380d5e00b')
       .then(response => response.json())
       .then(data => {
+        console.log(data,2233);
         const { ip, city, region, country, org, loc } = data;
         resultElement.innerText = `您的IP地址是: ${ip}`;
         detailsElement.innerHTML = `
