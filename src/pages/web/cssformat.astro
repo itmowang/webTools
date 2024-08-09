@@ -1,0 +1,134 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+
+<Layout
+  title={`CSS 格式化/压缩工具 | ${SITE_TITLE}`}
+  description={`CSS 格式化/压缩工具 | ${SITE_DESCRIPTION}`}
+>
+  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32">
+    <div class="bg-white p-8 shadow-md w-full max-w-3xl card">
+      <h1 class="text-2xl font-bold mb-4">CSS 格式化/压缩工具</h1>
+      
+      <div class="mb-4">
+        <label for="inputCss" class="block text-sm font-medium mb-2">输入 CSS 代码</label>
+        <textarea id="inputCss" class="hidden"></textarea>
+        <div id="inputCssEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2 mb-4">
+        <div><button onclick="formatCss()" class="btn btn-info w-full text-white">格式化</button></div>
+        <div><button onclick="minifyCss()" class="btn btn-info w-full text-white">压缩</button></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="outputCss" class="block text-sm font-medium mb-2">结果</label>
+        <textarea id="outputCss" class="hidden"></textarea>
+        <div id="outputCssEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button onclick="copyResult()" class="btn btn-info text-white ">复制结果</button>
+        <button onclick="clearFields()" class="btn btn-error  text-white">清空</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入 CodeMirror 的 CSS 和 JS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css"
+  />
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-css.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/cssnano@5.1.14/dist/cssnano.min.js"
+  ></script>
+
+  <script is:inline>
+    // 初始化 CodeMirror 编辑器
+    const inputCssEditor = CodeMirror(document.getElementById("inputCssEditor"), {
+      mode: "css",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      height: "300px"
+    });
+
+    const outputCssEditor = CodeMirror(document.getElementById("outputCssEditor"), {
+      mode: "css",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      height: "300px"
+    });
+
+    function formatCss() {
+      const inputCss = inputCssEditor.getValue();
+      try {
+        const formattedCss = css_beautify(inputCss, {
+          indent_size: 2
+        });
+        outputCssEditor.setValue(formattedCss);
+      } catch (error) {
+        outputCssEditor.setValue("格式化失败，请检查代码。");
+      }
+    }
+
+    async function minifyCss() {
+      const inputCss = inputCssEditor.getValue();
+      try {
+        const minifiedCss = await cssnano.process(inputCss).then(result => result.css);
+        outputCssEditor.setValue(minifiedCss);
+      } catch (error) {
+        outputCssEditor.setValue("压缩失败，请检查代码。");
+      }
+    }
+
+    function copyResult() {
+      const result = outputCssEditor.getValue();
+      navigator.clipboard.writeText(result).then(() => {
+        alert('结果已复制到剪贴板');
+      });
+    }
+
+    function clearFields() {
+      inputCssEditor.setValue("");
+      outputCssEditor.setValue("");
+    }
+
+    // 设置初始测试代码
+    const testCssCode = `body {
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}`;
+
+    inputCssEditor.setValue(testCssCode);
+  </script>
+</Layout>

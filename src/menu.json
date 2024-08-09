@@ -97,6 +97,12 @@
         "desc": "提供在线html、xml格式化",
         "href": "/web/htmlformat/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "css代码格式化/压缩",
+        "desc": "在线css格式化，在线压缩css代码",
+        "href": "/web/cssformat/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
