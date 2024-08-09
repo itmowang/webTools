@@ -43,6 +43,12 @@
         "desc": "时间戳转换工具",
         "href": "/web/timetran/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "MD5在线加密",
+        "desc": "MD5在线加密工具",
+        "href": "/web/md5encry/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },

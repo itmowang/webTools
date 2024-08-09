@@ -1,0 +1,161 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<Layout
+  title={`MD5在线加密工具 | ${SITE_TITLE}`}
+  description={`MD5在线加密工具 | ${SITE_DESCRIPTION}`}
+>
+  <div
+    class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32"
+  >
+    <div class="bg-white p-8 shadow-md w-full max-w-lg card">
+      <h1 class="text-2xl font-bold mb-4">MD5在线加密工具</h1>
+      
+      <div class="mb-4">
+        <label for="inputText" class="block text-sm font-medium">输入文本</label>
+        <input
+          type="text"
+          id="inputText"
+          class="input input-bordered w-full"
+          placeholder="请输入需要加密的文本..."
+        />
+      </div>
+
+      <div class="text-center mb-4">
+        <button
+          type="button"
+          onclick="generateMD5()"
+          class="btn btn-info text-white w-full"
+        >
+          生成MD5
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium">32位 MD5 大写</label>
+        <div class="flex items-center space-x-2">
+          <input
+            id="md5Upper32"
+            class="input input-bordered w-full"
+            readonly
+            placeholder="结果将显示在这里..."
+          />
+          <button
+            type="button"
+            onclick="copyResult('md5Upper32')"
+            class="btn btn-sm btn-success"
+          >
+            复制
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium">32位 MD5 小写</label>
+        <div class="flex items-center space-x-2">
+          <input
+            id="md5Lower32"
+            class="input input-bordered w-full"
+            readonly
+            placeholder="结果将显示在这里..."
+          />
+          <button
+            type="button"
+            onclick="copyResult('md5Lower32')"
+            class="btn btn-sm btn-success"
+          >
+            复制
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium">16位 MD5 大写</label>
+        <div class="flex items-center space-x-2">
+          <input
+            id="md5Upper16"
+            class="input input-bordered w-full"
+            readonly
+            placeholder="结果将显示在这里..."
+          />
+          <button
+            type="button"
+            onclick="copyResult('md5Upper16')"
+            class="btn btn-sm btn-success"
+          >
+            复制
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium">16位 MD5 小写</label>
+        <div class="flex items-center space-x-2">
+          <input
+            id="md5Lower16"
+            class="input input-bordered w-full"
+            readonly
+            placeholder="结果将显示在这里..."
+          />
+          <button
+            type="button"
+            onclick="copyResult('md5Lower16')"
+            class="btn btn-sm btn-success"
+          >
+            复制
+          </button>
+        </div>
+      </div>
+
+      <div class="flex justify-between space-x-4 mt-4">
+        <button
+          type="button"
+          onclick="clearResult()"
+          class="btn btn-error text-white w-full"
+        >
+          清除结果
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+  function md5(input) {
+    return crypto.subtle.digest("MD5", new TextEncoder().encode(input)).then(buffer => {
+      return Array.prototype.map.call(new Uint8Array(buffer), x => ("00" + x.toString(16)).slice(-2)).join("");
+    });
+  }
+
+  async function generateMD5() {
+    const input = document.getElementById("inputText").value;
+    if (input.trim() === "") {
+      alert("请输入有效的文本！");
+      return;
+    }
+
+    const md5Hash = await md5(input);
+
+    document.getElementById("md5Upper32").value = md5Hash.toUpperCase();
+    document.getElementById("md5Lower32").value = md5Hash.toLowerCase();
+    document.getElementById("md5Upper16").value = md5Hash.slice(8, 24).toUpperCase();
+    document.getElementById("md5Lower16").value = md5Hash.slice(8, 24).toLowerCase();
+  }
+
+  function copyResult(elementId) {
+    const element = document.getElementById(elementId);
+    element.select();
+    document.execCommand("copy");
+    alert("结果已复制！");
+  }
+
+  function clearResult() {
+    document.getElementById("inputText").value = "";
+    document.getElementById("md5Upper32").value = "";
+    document.getElementById("md5Lower32").value = "";
+    document.getElementById("md5Upper16").value = "";
+    document.getElementById("md5Lower16").value = "";
+  }
+</script>
