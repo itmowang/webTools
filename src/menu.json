@@ -29,7 +29,7 @@
       {
         "name": "URL编码/解码",
         "desc": "URL编码/解码工具",
-        "href": "/web/randompassword/index.html",
+        "href": "/web/urlCode/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]

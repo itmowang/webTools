@@ -7,15 +7,81 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
   title={`RGB转换Hex工具 | ${SITE_TITLE}`}
   description={`RGB转换Hex工具 | ${SITE_DESCRIPTION}`}
 >
-  <div
+  <div 
     class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32"
   >
-    <div class="bg-white p-8 shadow-md w-full max-w-sm card">
-      <h1 class="text-2xl font-bold mb-4"> URL 解码 </h1>
-        
+    <div class="bg-white p-8 shadow-md w-full max-w-3xl card">
+      <h1 class="text-2xl font-bold mb-4">URL 解码</h1>
+      <textarea
+        id="inputText"
+        class="textarea  textarea-bordered w-full mb-4"
+        placeholder="输入您的URL或文本..."></textarea>
+      <div class="flex flex-col space-y-4">
+        <button
+          type="button"
+          onclick="encodeURL()"
+          class="btn btn-info text-white"
+        >
+          URL编码
+        </button>
+        <button
+          type="button"
+          onclick="decodeURL()"
+          class="btn btn-info text-white"
+        >
+          URL解码
+        </button>
+      </div>
+      <textarea
+        id="resultText"
+        class="textarea textarea-success w-full mt-4"
+        readonly
+        placeholder="结果将显示在这里..."></textarea>
+      <div class=" mt-4">
+        <button
+          type="button"
+          onclick="copyResult()"
+          class="btn btn-success text-white w-full"
+        >
+          复制结果
+        </button>
+        <button
+          type="button"
+          onclick="clearResult()"
+          class="btn btn-error text-white w-full mt-4"
+        >
+          清除结果
+        </button>
+      </div>
     </div>
   </div>
 </Layout>
 <script is:inline>
-  
+    function encodeURL() {
+    const input = document.getElementById("inputText").value;
+    const result = encodeURIComponent(input);
+    document.getElementById("resultText").value = result;
+  }
+
+  function decodeURL() {
+    const input = document.getElementById("inputText").value;
+    try {
+      const result = decodeURIComponent(input);
+      document.getElementById("resultText").value = result;
+    } catch (e) {
+      document.getElementById("resultText").value = "解码错误，请检查输入内容。";
+    }
+  }
+
+  function copyResult() {
+    const resultElement = document.getElementById("resultText");
+    resultElement.select();
+    document.execCommand("copy");
+    alert("结果已复制！");
+  }
+
+  function clearResult() {
+    document.getElementById("inputText").value = "";
+    document.getElementById("resultText").value = "";
+  }
 </script>
