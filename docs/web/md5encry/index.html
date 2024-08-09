@@ -10,21 +10,15 @@
 复制
 </button> </div> </div> <div class="flex justify-between space-x-4 mt-4"> <button type="button" onclick="clearResult()" class="btn btn-error text-white w-full">
 清除结果
-</button> </div> </div> </div>  </main> <!-- Footer --><footer class="bg-info text-white text-center py-4 mt-8 fixed bottom-0 w-full"> <p>&copy; 2024 我的Web工具箱. 版权所有。</p> </footer> </body></html> <script>
-  function md5(input) {
-    return crypto.subtle.digest("MD5", new TextEncoder().encode(input)).then(buffer => {
-      return Array.prototype.map.call(new Uint8Array(buffer), x => ("00" + x.toString(16)).slice(-2)).join("");
-    });
-  }
-
-  async function generateMD5() {
+</button> </div> </div> </div>  </main> <!-- Footer --><footer class="bg-info text-white text-center py-4 mt-8 fixed bottom-0 w-full"> <p>&copy; 2024 我的Web工具箱. 版权所有。</p> </footer> </body></html> <!-- 引入 crypto-js 库 --> <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script> <script>
+  function generateMD5() {
     const input = document.getElementById("inputText").value;
     if (input.trim() === "") {
       alert("请输入有效的文本！");
       return;
     }
 
-    const md5Hash = await md5(input);
+    const md5Hash = CryptoJS.MD5(input).toString();
 
     document.getElementById("md5Upper32").value = md5Hash.toUpperCase();
     document.getElementById("md5Lower32").value = md5Hash.toLowerCase();

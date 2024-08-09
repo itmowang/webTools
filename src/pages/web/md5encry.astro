@@ -122,21 +122,18 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
   </div>
 </Layout>
 
-<script is:inline>
-  function md5(input) {
-    return crypto.subtle.digest("MD5", new TextEncoder().encode(input)).then(buffer => {
-      return Array.prototype.map.call(new Uint8Array(buffer), x => ("00" + x.toString(16)).slice(-2)).join("");
-    });
-  }
+<!-- 引入 crypto-js 库 -->
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
-  async function generateMD5() {
+<script is:inline>
+  function generateMD5() {
     const input = document.getElementById("inputText").value;
     if (input.trim() === "") {
       alert("请输入有效的文本！");
       return;
     }
 
-    const md5Hash = await md5(input);
+    const md5Hash = CryptoJS.MD5(input).toString();
 
     document.getElementById("md5Upper32").value = md5Hash.toUpperCase();
     document.getElementById("md5Lower32").value = md5Hash.toLowerCase();
