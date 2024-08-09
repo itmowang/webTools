@@ -49,6 +49,12 @@
         "desc": "MD5在线加密工具",
         "href": "/web/md5encry/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "JSON在线转换",
+        "desc": "JSON在线转换",
+        "href": "/web/json/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
