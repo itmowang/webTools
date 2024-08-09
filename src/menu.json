@@ -19,6 +19,18 @@
         "desc": "RGB 转 Hex颜色快速获取",
         "href": "/web/rgbToHex/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "随机密码生成",
+        "desc": "随机密码生成工具",
+        "href": "/web/randompassword/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "URL编码/解码",
+        "desc": "URL编码/解码工具",
+        "href": "/web/randompassword/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
