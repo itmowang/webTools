@@ -55,6 +55,12 @@
         "desc": "JSON在线转换",
         "href": "/web/json/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "正则表达式测试",
+        "desc": "正则表达式测试",
+        "href": "/web/reg/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
