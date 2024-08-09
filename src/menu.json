@@ -79,6 +79,12 @@
         "desc": "JWT 解析工具",
         "href": "/web/jwt/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "HTML 实体转义",
+        "desc": "HTML 实体转义工具",
+        "href": "/web/htmlentity/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
