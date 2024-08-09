@@ -37,6 +37,12 @@
         "desc": "UUID生成器",
         "href": "/web/uuid/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "时间戳转换",
+        "desc": "时间戳转换工具",
+        "href": "/web/timetran/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },

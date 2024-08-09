@@ -1,0 +1,126 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<Layout
+  title={`时间戳转换工具 | ${SITE_TITLE}`}
+  description={`时间戳转换工具 | ${SITE_DESCRIPTION}`}
+>
+  <div
+    class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32"
+  >
+    <div class="bg-white p-8 shadow-md w-full max-w-lg card">
+      <h1 class="text-2xl font-bold mb-4">时间戳转换工具</h1>
+      
+      <div class="mb-4">
+        <label class="block text-sm font-medium">当前时间戳</label>
+        <p id="currentTimestamp" class="text-lg font-semibold"></p>
+      </div>
+      
+      <div class="mb-4">
+        <label for="timestampInput" class="block text-sm font-medium">输入时间戳（秒）</label>
+        <input
+          type="number"
+          id="timestampInput"
+          class="input input-bordered w-full"
+          placeholder="请输入时间戳..."
+        />
+        <button
+          type="button"
+          onclick="convertToBeijingTime()"
+          class="btn btn-info text-white w-full mt-2"
+        >
+          转换为北京时间
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label for="beijingTimeInput" class="block text-sm font-medium">输入北京时间</label>
+        <input
+          type="datetime-local"
+          id="beijingTimeInput"
+          class="input input-bordered w-full"
+        />
+        <button
+          type="button"
+          onclick="convertToTimestamp()"
+          class="btn btn-info text-white w-full mt-2"
+        >
+          转换为时间戳
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium">结果</label>
+        <textarea
+          id="result"
+          class="textarea textarea-bordered w-full"
+          readonly
+          placeholder="结果将显示在这里..."
+        ></textarea>
+      </div>
+
+      <div class=" mt-4">
+        <button
+          type="button"
+          onclick="copyResult()"
+          class="btn btn-success text-white w-full"
+        >
+          复制结果
+        </button>
+        <button
+          type="button"
+          onclick="clearResult()"
+          class="btn btn-error text-white w-full mt-4"
+        >
+          清除结果
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+  function updateCurrentTimestamp() {
+    const now = Math.floor(Date.now() / 1000);
+    document.getElementById("currentTimestamp").innerText = now;
+  }
+
+  function convertToBeijingTime() {
+    const timestamp = parseInt(document.getElementById("timestampInput").value);
+    if (isNaN(timestamp)) {
+      document.getElementById("result").value = "请输入有效的时间戳。";
+      return;
+    }
+    const date = new Date(timestamp * 1000);
+    const beijingTime = date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+    document.getElementById("result").value = `北京时间: ${beijingTime}`;
+  }
+
+  function convertToTimestamp() {
+    const beijingTimeInput = document.getElementById("beijingTimeInput").value;
+    if (!beijingTimeInput) {
+      document.getElementById("result").value = "请输入有效的北京时间。";
+      return;
+    }
+    const date = new Date(beijingTimeInput);
+    const timestamp = Math.floor(date.getTime() / 1000);
+    document.getElementById("result").value = `时间戳: ${timestamp}`;
+  }
+
+  function copyResult() {
+    const resultElement = document.getElementById("result");
+    resultElement.select();
+    document.execCommand("copy");
+    alert("结果已复制！");
+  }
+
+  function clearResult() {
+    document.getElementById("timestampInput").value = "";
+    document.getElementById("beijingTimeInput").value = "";
+    document.getElementById("result").value = "";
+  }
+
+  setInterval(updateCurrentTimestamp, 1000);
+</script>
