@@ -67,6 +67,12 @@
         "desc": "Unicode 与中文转换工具",
         "href": "/web/unicode/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "HTTP 状态码查询",
+        "desc": "HTTP 状态码查询工具",
+        "href": "/web/http/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },

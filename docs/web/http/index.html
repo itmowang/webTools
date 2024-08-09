@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.13.1"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://tools.loli.wang/web/http/"><!-- Primary Meta Tags --><title>HTTP 状态码查询工具 | 魔王 の WEB工具箱</title><meta name="title" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><meta name="description" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://tools.loli.wang/web/http/"><meta property="og:title" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><meta property="og:description" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><meta property="og:image" content="https://tools.loli.wang/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://tools.loli.wang/web/http/"><meta property="twitter:title" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><meta property="twitter:description" content="HTTP 状态码查询工具 | 魔王 の WEB工具箱"><meta property="twitter:image" content="https://tools.loli.wang/blog-placeholder-1.jpg"><link rel="stylesheet" href="/_astro/about.BjPC7xHw.css"></head> <body class="bg-gray-100  min-h-screen"> <!-- Header --><header class=" bg-info text-white absolute top-0 w-full"> <nav class="container mx-auto p-4 flex justify-between items-center"> <a href="/" class="text-2xl font-bold">我的Web工具箱</a> <div> <a href="/" class=" text-white">主页</a> <a href="/about" class=" ml-2 text-white">关于</a> <a href="#" class="ml-2 text-white">联系</a> </div> </nav> </header> <main>  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32"> <div class="bg-white p-8 shadow-md w-full max-w-3xl card"> <h1 class="text-2xl font-bold mb-4">HTTP 状态码查询工具</h1> <div class="mb-4"> <label for="statusCode" class="block text-sm font-medium mb-2">请输入 HTTP 状态码</label> <input type="number" id="statusCode" class="input input-bordered w-full" placeholder="例如：200, 404, 500..."> </div> <div class="flex space-x-2 mb-4"> <button onclick="checkStatusCode()" class="btn btn-info w-full text-white">查询状态码</button> </div> <div class="mb-4"> <label for="statusInfo" class="block text-sm font-medium mb-2">状态码信息</label> <textarea id="statusInfo" class="textarea textarea-bordered w-full h-32" readonly placeholder="状态码的详细信息将在此处显示..."></textarea> </div> <div class="flex space-x-2"> <button onclick="clearFields()" class="btn btn-error w-full text-white">清空</button> </div> </div> </div>  </main> <!-- Footer --><footer class="bg-info text-white text-center py-4 mt-8 fixed bottom-0 w-full"> <p>&copy; 2024 我的Web工具箱. 版权所有。</p> </footer> </body></html> <script>
+  const httpStatusCodes = {
+    "100": "100 Continue: 服务器已接收到请求的初始部分，客户端应继续发送请求。",
+    "101": "101 Switching Protocols: 服务器同意切换协议。",
+    "200": "200 OK: 请求成功。",
+    "201": "201 Created: 请求成功并且资源已被创建。",
+    "202": "202 Accepted: 请求已接收，但尚未处理。",
+    "203": "203 Non-Authoritative Information: 请求成功，但返回的元数据来自其他来源。",
+    "204": "204 No Content: 请求成功，但无内容返回。",
+    "205": "205 Reset Content: 请求成功，客户端应重置视图。",
+    "206": "206 Partial Content: 服务器成功处理了部分请求。",
+    "300": "300 Multiple Choices: 多个可供选择的资源。",
+    "301": "301 Moved Permanently: 资源已被永久转移到新的 URL。",
+    "302": "302 Found: 资源临时转移到新的 URL。",
+    "303": "303 See Other: 请使用 GET 请求获取资源。",
+    "304": "304 Not Modified: 资源未被修改。",
+    "307": "307 Temporary Redirect: 请求资源临时位于其他 URL。",
+    "400": "400 Bad Request: 客户端请求有误，服务器无法理解。",
+    "401": "401 Unauthorized: 请求要求用户认证。",
+    "403": "403 Forbidden: 服务器拒绝执行请求。",
+    "404": "404 Not Found: 请求的资源无法找到。",
+    "405": "405 Method Not Allowed: 请求方法不被允许。",
+    "406": "406 Not Acceptable: 请求资源不可用。",
+    "407": "407 Proxy Authentication Required: 需要代理身份验证。",
+    "408": "408 Request Timeout: 请求超时。",
+    "409": "409 Conflict: 请求与当前资源状态冲突。",
+    "410": "410 Gone: 资源已永久删除。",
+    "411": "411 Length Required: 需要 Content-Length 头。",
+    "412": "412 Precondition Failed: 请求的前提条件失败。",
+    "413": "413 Payload Too Large: 请求实体过大。",
+    "414": "414 URI Too Long: URI 过长。",
+    "415": "415 Unsupported Media Type: 不支持的媒体类型。",
+    "416": "416 Range Not Satisfiable: 请求范围无法满足。",
+    "417": "417 Expectation Failed: 期望失败。",
+    "500": "500 Internal Server Error: 服务器遇到错误，无法完成请求。",
+    "501": "501 Not Implemented: 服务器不支持请求的方法。",
+    "502": "502 Bad Gateway: 作为网关或代理的服务器，从上游服务器收到无效响应。",
+    "503": "503 Service Unavailable: 服务器当前无法处理请求，通常由于过载或维护。",
+    "504": "504 Gateway Timeout: 网关超时。",
+    "505": "505 HTTP Version Not Supported: 不支持的 HTTP 版本。",
+    "511": "511 Network Authentication Required: 需要网络身份验证。"
+  };
+
+  function checkStatusCode() {
+    const statusCode = document.getElementById("statusCode").value;
+    const statusInfo = document.getElementById("statusInfo");
+
+    if (httpStatusCodes[statusCode]) {
+      statusInfo.value = httpStatusCodes[statusCode];
+    } else {
+      statusInfo.value = "未知状态码，请输入有效的 HTTP 状态码。";
+    }
+  }
+
+  function clearFields() {
+    document.getElementById("statusCode").value = "";
+    document.getElementById("statusInfo").value = "";
+  }
+</script>
