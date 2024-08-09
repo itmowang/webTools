@@ -31,6 +31,12 @@
         "desc": "URL编码/解码工具",
         "href": "/web/urlCode/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "UUID生成器",
+        "desc": "UUID生成器",
+        "href": "/web/uuid/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
