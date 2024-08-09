@@ -1,0 +1,108 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<Layout
+  title={`HTML/XML 格式化工具 | ${SITE_TITLE}`}
+  description={`HTML/XML 格式化工具 | ${SITE_DESCRIPTION}`}
+>
+  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32">
+    <div class="bg-white p-8 shadow-md w-full max-w-3xl card">
+      <h1 class="text-2xl font-bold mb-4">HTML/XML 格式化工具</h1>
+      
+      <div class="mb-4">
+        <label for="inputCode" class="block text-sm font-medium mb-2">输入 HTML/XML 代码</label>
+        <textarea id="inputCode" class="hidden"></textarea>
+        <div id="inputCodeEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2 mb-4">
+        <button onclick="formatCode()" class="btn btn-info w-full text-white">格式化</button>
+      </div>
+
+      <div class="mb-4">
+        <label for="outputCode" class="block text-sm font-medium mb-2">结果</label>
+        <textarea id="outputCode" class="hidden"></textarea>
+        <div id="outputCodeEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button onclick="copyResult()" class="btn btn-info text-white">复制结果</button>
+        <button onclick="clearFields()" class="btn btn-error text-white w-64">清空</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入 CodeMirror 的 CSS 和 JS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css"
+  />
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-html.min.js"
+  ></script>
+
+  <script is:inline>
+    // 初始化 CodeMirror 编辑器
+    const inputCodeEditor = CodeMirror(document.getElementById("inputCodeEditor"), {
+      mode: "xml",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      height: "300px"
+    });
+
+    const outputCodeEditor = CodeMirror(document.getElementById("outputCodeEditor"), {
+      mode: "xml",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      height: "300px"
+    });
+
+    function formatCode() {
+      const inputCode = inputCodeEditor.getValue();
+      try {
+        const formattedCode = html_beautify(inputCode, {
+          indent_size: 2,
+          unformatted: [], // 不跳过任何标签
+          preserve_newlines: true
+        });
+        outputCodeEditor.setValue(formattedCode);
+      } catch (error) {
+        outputCodeEditor.setValue("格式化失败，请检查代码。");
+      }
+    }
+
+    function copyResult() {
+      const result = outputCodeEditor.getValue();
+      navigator.clipboard.writeText(result).then(() => {
+        alert('结果已复制到剪贴板');
+      });
+    }
+
+    function clearFields() {
+      inputCodeEditor.setValue("");
+      outputCodeEditor.setValue("");
+    }
+
+    // 设置初始测试代码
+    const testCode = `<div><p>这是一个测试HTML代码。</p><p>第二段测试内容。</p></div>`;
+    inputCodeEditor.setValue(testCode);
+  </script>
+</Layout>

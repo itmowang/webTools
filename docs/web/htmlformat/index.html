@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.13.1"><!-- Font preloads --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://tools.loli.wang/web/htmlformat/"><!-- Primary Meta Tags --><title>HTML/XML 格式化工具 | 魔王 の WEB工具箱</title><meta name="title" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><meta name="description" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://tools.loli.wang/web/htmlformat/"><meta property="og:title" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><meta property="og:description" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><meta property="og:image" content="https://tools.loli.wang/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://tools.loli.wang/web/htmlformat/"><meta property="twitter:title" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><meta property="twitter:description" content="HTML/XML 格式化工具 | 魔王 の WEB工具箱"><meta property="twitter:image" content="https://tools.loli.wang/blog-placeholder-1.jpg"><link rel="stylesheet" href="/_astro/about.BgtfI7AS.css"></head> <body class="bg-gray-100  min-h-screen"> <!-- Header --><header class=" bg-info text-white absolute top-0 w-full"> <nav class="container mx-auto p-4 flex justify-between items-center"> <a href="/" class="text-2xl font-bold">我的Web工具箱</a> <div> <a href="/" class=" text-white">主页</a> <a href="/about" class=" ml-2 text-white">关于</a> <a href="#" class="ml-2 text-white">联系</a> </div> </nav> </header> <main>  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32"> <div class="bg-white p-8 shadow-md w-full max-w-3xl card"> <h1 class="text-2xl font-bold mb-4">HTML/XML 格式化工具</h1> <div class="mb-4"> <label for="inputCode" class="block text-sm font-medium mb-2">输入 HTML/XML 代码</label> <textarea id="inputCode" class="hidden"></textarea> <div id="inputCodeEditor" class="border rounded"></div> </div> <div class="flex space-x-2 mb-4"> <button onclick="formatCode()" class="btn btn-info w-full text-white">格式化</button> </div> <div class="mb-4"> <label for="outputCode" class="block text-sm font-medium mb-2">结果</label> <textarea id="outputCode" class="hidden"></textarea> <div id="outputCodeEditor" class="border rounded"></div> </div> <div class="flex space-x-2"> <button onclick="copyResult()" class="btn btn-info text-white">复制结果</button> <button onclick="clearFields()" class="btn btn-error text-white w-64">清空</button> </div> </div> </div>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-html.min.js"></script> <script>
+    // 初始化 CodeMirror 编辑器
+    const inputCodeEditor = CodeMirror(document.getElementById("inputCodeEditor"), {
+      mode: "xml",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      height: "300px"
+    });
+
+    const outputCodeEditor = CodeMirror(document.getElementById("outputCodeEditor"), {
+      mode: "xml",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      height: "300px"
+    });
+
+    function formatCode() {
+      const inputCode = inputCodeEditor.getValue();
+      try {
+        const formattedCode = html_beautify(inputCode, {
+          indent_size: 2,
+          unformatted: [], // 不跳过任何标签
+          preserve_newlines: true
+        });
+        outputCodeEditor.setValue(formattedCode);
+      } catch (error) {
+        outputCodeEditor.setValue("格式化失败，请检查代码。");
+      }
+    }
+
+    function copyResult() {
+      const result = outputCodeEditor.getValue();
+      navigator.clipboard.writeText(result).then(() => {
+        alert('结果已复制到剪贴板');
+      });
+    }
+
+    function clearFields() {
+      inputCodeEditor.setValue("");
+      outputCodeEditor.setValue("");
+    }
+
+    // 设置初始测试代码
+    const testCode = `<div><p>这是一个测试HTML代码。</p><p>第二段测试内容。</p></div>`;
+    inputCodeEditor.setValue(testCode);
+  </script>  </main> <!-- Footer --><footer class="bg-info text-white text-center py-4 mt-8 fixed bottom-0 w-full"> <p>&copy; 2024 我的Web工具箱. 版权所有。</p> </footer> </body></html>
