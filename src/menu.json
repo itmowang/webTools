@@ -58,8 +58,14 @@
       },
       {
         "name": "正则表达式测试",
-        "desc": "正则表达式测试",
+        "desc": "正则表达式测试工具",
         "href": "/web/reg/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "Unicode 与中文转换",
+        "desc": "Unicode 与中文转换工具",
+        "href": "/web/unicode/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]

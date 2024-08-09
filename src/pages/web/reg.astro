@@ -12,18 +12,20 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
   >
     <div class="bg-white p-8 shadow-md w-full max-w-2xl card">
       <h1 class="text-2xl font-bold mb-4">正则表达式测试工具</h1>
-      
+
       <div class="mb-4">
-        <label for="inputText" class="block text-sm font-medium mb-2">输入文本</label>
+        <label for="inputText" class="block text-sm font-medium">输入文本</label
+        >
         <textarea
           id="inputText"
           class="textarea textarea-bordered w-full h-32"
-          placeholder="在此处输入要匹配的文本..."
-        ></textarea>
+          placeholder="在此处输入要匹配的文本..."></textarea>
       </div>
 
       <div class="mb-4">
-        <label for="regexPattern" class="block text-sm font-medium mb-2">正则表达式</label>
+        <label for="regexPattern" class="block text-sm font-medium"
+          >正则表达式</label
+        >
         <input
           type="text"
           id="regexPattern"
@@ -32,31 +34,73 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
         />
       </div>
 
-      <div class="flex space-x-2 mb-4">
-        <button onclick="testRegex()" class="btn btn-info w-full text-white">测试匹配</button>
+      <div class="flex items-center space-x-2 mb-4">
+        <label class="label cursor-pointer space-x-2">
+          <input
+            type="checkbox"
+            id="globalSearch"
+            class="checkbox checkbox-info"
+          />
+          <span class="label-text">全局搜索 (g)</span>
+        </label>
+        <label class="label cursor-pointer space-x-2">
+          <input
+            type="checkbox"
+            id="ignoreCase"
+            class="checkbox checkbox-info"
+          />
+          <span class="label-text">忽略大小写 (i)</span>
+        </label>
       </div>
 
-      <div class="flex  mb-4">
-        <button onclick="setRegex('^1[3-9]\\d{9}$')" class="btn  btn-link ">匹配手机号</button>
-        <button onclick="setRegex('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')" class="btn  btn-link ">匹配邮箱</button>
-        <button onclick="setRegex('^(https?:\\/\\/)?([\\da-z.-]+)\\.([a-z.]{2,6})([\\/\\w .-]*)*\\/?$')" class="btn  btn-link ">匹配网址</button>
-        <button onclick="setRegex('^(\\d{15}|\\d{18}|\\d{17}[\\dXx])$')" class="btn  btn-link ">匹配身份证</button>
-        <button onclick="setRegex('^-?\\d+$')" class="btn  btn-link ">匹配整数</button>
-        <button onclick="setRegex('^(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$')" class="btn  btn-link ">匹配 IPv4 地址</button>
+      <div class="flex space-x-2 mb-4">
+        <button onclick="testRegex()" class="btn btn-info w-full text-white"
+          >测试匹配</button
+        >
+      </div>
+
+      <div class="flex mb-4">
+        <button
+          onclick="setRegex('^1[3-9]\\d{9}$')"
+          class="btn btn-secondary btn-link">匹配手机号</button
+        >
+        <button
+          onclick="setRegex('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')"
+          class="btn btn-secondary btn-link">匹配邮箱</button
+        >
+        <button
+          onclick="setRegex('^(https?:\\/\\/)?([\\da-z.-]+)\\.([a-z.]{2,6})([\\/\\w .-]*)*\\/?$')"
+          class="btn btn-secondary btn-link">匹配网址</button
+        >
+        <button
+          onclick="setRegex('^(\\d{15}|\\d{18}|\\d{17}[\\dXx])$')"
+          class="btn btn-secondary btn-link">匹配身份证</button
+        >
+        <button
+          onclick="setRegex('^-?\\d+$')"
+          class="btn btn-secondary btn-link">匹配整数</button
+        >
+        <button
+          onclick="setRegex('^(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$')"
+          class="btn btn-secondary btn-link">匹配 IPv4 地址</button
+        >
       </div>
 
       <div class="mb-4">
-        <label for="matchResult" class="block text-sm font-medium mb-2">匹配结果</label>
+        <label for="matchResult" class="block text-sm font-medium"
+          >匹配结果</label
+        >
         <textarea
           id="matchResult"
           class="textarea textarea-bordered w-full h-32"
           readonly
-          placeholder="匹配结果将在此处显示..."
-        ></textarea>
+          placeholder="匹配结果将在此处显示..."></textarea>
       </div>
 
       <div class="flex justify-between space-x-2">
-        <button onclick="clearFields()" class="btn btn-error w-full text-white">清空</button>
+        <button onclick="clearFields()" class="btn btn-error w-full text-white"
+          >清空</button
+        >
       </div>
     </div>
   </div>
@@ -66,6 +110,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
   function testRegex() {
     const inputText = document.getElementById("inputText").value;
     const regexPattern = document.getElementById("regexPattern").value;
+    const globalSearch = document.getElementById("globalSearch").checked
+      ? "g"
+      : "";
+    const ignoreCase = document.getElementById("ignoreCase").checked ? "i" : "";
+    const flags = globalSearch + ignoreCase;
 
     if (!regexPattern) {
       alert("请输入正则表达式");
@@ -73,7 +122,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
     }
 
     try {
-      const regex = new RegExp(regexPattern, "g");
+      const regex = new RegExp(regexPattern, flags);
       const matches = inputText.match(regex);
       const result = matches ? matches.join("\n") : "没有匹配项";
       document.getElementById("matchResult").value = result;
