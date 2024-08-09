@@ -1,0 +1,114 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<Layout
+  title={`JWT 解析工具 | ${SITE_TITLE}`}
+  description={`JWT 解析工具 | ${SITE_DESCRIPTION}`}
+>
+  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32">
+    <div class="bg-white p-8 shadow-md w-full max-w-3xl card">
+      <h1 class="text-2xl font-bold mb-4">JWT 解析工具</h1>
+      
+      <div class="mb-4">
+        <label for="jwtInput" class="block text-sm font-medium mb-2">请输入 JWT</label>
+        <textarea
+          id="jwtInput"
+          class="textarea textarea-bordered w-full h-24"
+          placeholder="请输入 JWT..."
+        ></textarea>
+      </div>
+
+      <div class="flex space-x-2 mb-4">
+        <button onclick="parseJWT()" class="btn btn-info w-full text-white">解析 JWT</button>
+      </div>
+
+      <div class="mb-4">
+        <label for="headerOutput" class="block text-sm font-medium mb-2">Header</label>
+        <div id="headerOutput"></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="payloadOutput" class="block text-sm font-medium mb-2">Payload</label>
+        <div id="payloadOutput" ></div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button onclick="clearFields()" class="btn btn-error w-full text-white">清空</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入 CodeMirror 的 CSS 和 JS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css"
+  />
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"
+  ></script>
+
+  <script is:inline>
+    let headerEditor, payloadEditor;
+
+    document.addEventListener("DOMContentLoaded", function () {
+      headerEditor = CodeMirror(document.getElementById("headerOutput"), {
+        lineNumbers: true,
+        mode: "application/json",
+        theme: "material",
+        readOnly: true,
+      });
+
+      payloadEditor = CodeMirror(document.getElementById("payloadOutput"), {
+        lineNumbers: true,
+        mode: "application/json",
+        theme: "material",
+        readOnly: true,
+      });
+    });
+
+    function parseJWT() {
+      const jwt = document.getElementById("jwtInput").value.trim();
+
+      if (!jwt) {
+        headerEditor.setValue("请输入有效的 JWT。");
+        payloadEditor.setValue("");
+        return;
+      }
+
+      const parts = jwt.split(".");
+      if (parts.length !== 3) {
+        headerEditor.setValue("JWT 格式错误，应包含三个部分（Header, Payload, Signature）。");
+        payloadEditor.setValue("");
+        return;
+      }
+
+      try {
+        const header = JSON.parse(atob(parts[0]));
+        const payload = JSON.parse(atob(parts[1]));
+
+        headerEditor.setValue(JSON.stringify(header, null, 2));
+        payloadEditor.setValue(JSON.stringify(payload, null, 2));
+      } catch (error) {
+        headerEditor.setValue("解析 JWT 失败，请确保输入正确的 JWT。");
+        payloadEditor.setValue("");
+      }
+    }
+
+    function clearFields() {
+      document.getElementById("jwtInput").value = "";
+      headerEditor.setValue("");
+      payloadEditor.setValue("");
+    }
+  </script>
+</Layout>

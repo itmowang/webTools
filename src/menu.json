@@ -73,6 +73,12 @@
         "desc": "HTTP 状态码查询工具",
         "href": "/web/http/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "JWT 解析工具",
+        "desc": "JWT 解析工具",
+        "href": "/web/jwt/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },
