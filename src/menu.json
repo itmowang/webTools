@@ -85,6 +85,12 @@
         "desc": "HTML 实体转义工具",
         "href": "/web/htmlentity/index.html",
         "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
+        "name": "js代码格式化/压缩",
+        "desc": "JS格式化/压缩工具,提供在线JS格式化、JS压缩、JS混淆",
+        "href": "/web/jsforamt/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
       }
     ]
   },

@@ -1,0 +1,145 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<Layout
+  title={`JS 格式化/压缩/混淆工具 | ${SITE_TITLE}`}
+  description={`JS 格式化/压缩/混淆工具 | ${SITE_DESCRIPTION}`}
+>
+  <div class="bg-gray-100 min-h-screen flex flex-col items-center justify-center pt-32 pb-32">
+    <div class="bg-white p-8 shadow-md w-full max-w-3xl card">
+      <h1 class="text-2xl font-bold mb-4">JS 格式化/压缩/混淆工具</h1>
+      
+      <div class="mb-4">
+        <label for="inputJs" class="block text-sm font-medium">输入 JavaScript 代码</label>
+        <textarea id="inputJs" class="hidden"></textarea>
+        <div id="inputJsEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2 mb-4">
+        <button onclick="formatJs()" class="btn btn-info w-full">格式化</button>
+        <button onclick="minifyJs()" class="btn btn-info w-full">压缩</button>
+        <button onclick="obfuscateJs()" class="btn btn-info w-full">混淆</button>
+      </div>
+
+      <div class="mb-4">
+        <label for="outputJs" class="block text-sm font-medium">结果</label>
+        <textarea id="outputJs" class="hidden"></textarea>
+        <div id="outputJsEditor" class="border rounded"></div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button onclick="copyResult()" class="btn btn-primary w-full">复制结果</button>
+        <button onclick="clearFields()" class="btn btn-error w-full">清空</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入 CodeMirror 的 CSS 和 JS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/material.min.css"
+  />
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify.min.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/javascript-obfuscator@4.2.0/browser/index.js"
+  ></script>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/terser@5.15.0/dist/bundle.min.js"
+  ></script>
+
+  <script is:inline>
+    // Initialize CodeMirror editors
+    const inputJsEditor = CodeMirror(document.getElementById("inputJsEditor"), {
+      mode: "javascript",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      height: "300px"
+    });
+
+    const outputJsEditor = CodeMirror(document.getElementById("outputJsEditor"), {
+      mode: "javascript",
+      theme: "material",
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      height: "300px"
+    });
+
+    function formatJs() {
+      const inputJs = inputJsEditor.getValue();
+      try {
+        const formatted = js_beautify(inputJs, { indent_size: 2 });
+        outputJsEditor.setValue(formatted);
+      } catch (error) {
+        outputJsEditor.setValue("格式化失败，请检查代码。");
+      }
+    }
+
+    async function minifyJs() {
+      const inputJs = inputJsEditor.getValue();
+      try {
+        const minified = await Terser.minify(inputJs);
+        outputJsEditor.setValue(minified.code);
+      } catch (error) {
+        outputJsEditor.setValue("压缩失败，请检查代码。");
+      }
+    }
+
+    function obfuscateJs() {
+      const inputJs = inputJsEditor.getValue();
+      try {
+        const obfuscated = JavaScriptObfuscator.obfuscate(inputJs, {
+          compact: true,
+          controlFlowFlattening: true,
+          controlFlowFlatteningThreshold: 1,
+          deadCodeInjection: true,
+          debugProtection: true,
+          debugProtectionInterval: 1000,
+          disableConsoleOutput: true
+        }).getObfuscatedCode();
+        outputJsEditor.setValue(obfuscated);
+      } catch (error) {
+        outputJsEditor.setValue("混淆失败，请检查代码。");
+      }
+    }
+
+    function copyResult() {
+      const result = outputJsEditor.getValue();
+      navigator.clipboard.writeText(result).then(() => {
+        alert('结果已复制到剪贴板');
+      });
+    }
+
+    function clearFields() {
+      inputJsEditor.setValue("");
+      outputJsEditor.setValue("");
+    }
+
+    // Set initial test code
+    const testJsCode = `function helloWorld() {
+  console.log("Hello, world!");
+}
+helloWorld();`;
+    inputJsEditor.setValue(testJsCode);
+  </script>
+</Layout>
