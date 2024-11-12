@@ -15,6 +15,12 @@
         "icon": "https://github.githubassets.com/favicon.ico"
       },
       {
+        "name": "批量QrCode生成/批量二维码生成",
+        "desc": "在线二维码生成",
+        "href": "/web/basthQrcode/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
         "name": "Hex 转 RGB",
         "desc": "Hex 转 RGB颜色快速获取",
         "href": "/web/hexToRgb/index.html",
