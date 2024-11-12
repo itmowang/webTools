@@ -9,6 +9,12 @@
         "icon": "https://github.githubassets.com/favicon.ico"
       },
       {
+        "name": "QrCode生成/二维码生成",
+        "desc": "在线二维码生成",
+        "href": "/web/qrcode/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
         "name": "Hex 转 RGB",
         "desc": "Hex 转 RGB颜色快速获取",
         "href": "/web/hexToRgb/index.html",
@@ -109,7 +115,12 @@
   {
     "name": "文本处理",
     "items": [
-      
+      {
+        "name": "文本对比",
+        "desc": "文本对比工具",
+        "href": "/text/diff/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      }
     ]
   },
   {

@@ -1,15 +1,16 @@
 {
-    "extends": "astro/tsconfigs/base",
-    "compilerOptions": {
-        "strictNullChecks": true,
-        "baseUrl": ".",
-        "paths": {
-          "@content/*": [
-            "src/content/*"
-          ],
-          "@/*": [
-            "src/*"
-          ]
-        }
-      }
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@content/*": [
+        "src/content/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "preserve"
+  }
 }
