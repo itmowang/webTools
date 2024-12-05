@@ -21,6 +21,12 @@
         "icon": "https://github.githubassets.com/favicon.ico"
       },
       {
+        "name": "Base64加密/解密",
+        "desc": "在线Base64处理",
+        "href": "/web/base64/index.html",
+        "icon": "https://github.githubassets.com/favicon.ico"
+      },
+      {
         "name": "Hex 转 RGB",
         "desc": "Hex 转 RGB颜色快速获取",
         "href": "/web/hexToRgb/index.html",
